@@ -1,13 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// Import Routes dan Route di sini
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Import custom pages
+import CounterReducerContainer from "./containers/CounterReducerContainer";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route path="use-reducer" element={<CounterReducerContainer />} />
+          <Route
+            path="react-redux"
+            element={
+              <>
+                <h1>React Redux</h1>
+              </>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
