@@ -6,8 +6,11 @@
 export const initialValue = { user: "Whoever", counter: 10000 };
 
 export const rootReducer = (state, action) => {
-  // asumsi: action memiliki tipeAksi sebagai kondisi
-  // tipeAksi memiliki string sebagai berikut:
+  // asumsi sebelumnya: action memiliki tipeAksi sebagai kondisi
+
+  // dengan redux, tipeAksi HARUS bernama "type"
+  // sehingga action HARUS memiliki type, yang isinya sebagai berikut
+
   // "increment" untuk menambahkan counter (+1)
   // "decrement" untuk mengurangi counter (-1)
   // "incrementSpec" untuk menambahkan counter sejumlah "amount" (+ amount)
@@ -17,18 +20,22 @@ export const rootReducer = (state, action) => {
   // Karena sekarang ini kita sudah menggunakan object, ada yang harus dimodifikasi dari kodenya
   // yang kita buat
 
-  if (action.tipeAksi === "increment") {
+  if (action.type === "increment") {
     // return counter + 1;
     return { ...state, counter: state.counter + 1 };
-  } else if (action.tipeAksi === "decrement") {
+  } else if (action.type === "decrement") {
     // return counter - 1;
-    return { ...state, counter: state.counter + 1 };
-  } else if (action.tipeAksi === "incrementSpec") {
+    return { ...state, counter: state.counter - 1 };
+  } else if (action.type === "incrementSpec") {
     // return counter + action.amount;
     return { ...state, counter: state.counter + action.amount };
-  } else if (action.tipeAksi === "decrementSpec") {
+  } else if (action.type === "decrementSpec") {
     return { ...state, counter: state.counter - action.amount };
-  } else if (action.tipeAksi === "reset") {
+  } else if (action.type === "reset") {
     return { ...state, counter: 0 };
+  }
+  // HARUS ADA DEFAULT STATENYA atau kode ini tidak akan berjalan !
+  else {
+    return state;
   }
 };

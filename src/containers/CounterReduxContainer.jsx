@@ -13,11 +13,29 @@ const CounterReduxContainer = () => {
   const username = useSelector((state) => state.user);
   const counter = useSelector((state) => state.counter);
 
-  const buttonDecrementOnClickHandler = () => {};
+  // Untuk menggunakan dispatch (action) nya, kita gunakan dispatcher dari hooks useDispatch
+  const dispatcher = useDispatch();
 
-  const buttonResetOnClickHandler = () => {};
+  const buttonDecrementOnClickHandler = () => {
+    // Di sini kita akan memanggil dispatcher-nya,
+    // jangan lupa untuk melemparkan aksi apa yang ingin dilakukan via
+    // props "type"
+    dispatcher({
+      type: "decrement",
+    });
+  };
 
-  const buttonIncrementOnClickHandler = () => {};
+  const buttonResetOnClickHandler = () => {
+    dispatcher({
+      type: "reset",
+    });
+  };
+
+  const buttonIncrementOnClickHandler = () => {
+    dispatcher({
+      type: "increment",
+    });
+  };
 
   return (
     <>
@@ -42,7 +60,8 @@ const CounterReduxContainer = () => {
           <TextField
             disabled
             label="Current Counter"
-            defaultValue="0"
+            // defaultValue="0"
+            value={counter}
             size="small"
           />
         </Box>
