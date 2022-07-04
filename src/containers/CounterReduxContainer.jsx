@@ -1,25 +1,20 @@
-import React from "react";
+// Pada akhirnya sekarang kita membutuhkan useState untuk menyimpan data dari TextField
+import React, { useState } from "react";
 
 import { Box, Button, TextField, Typography } from "@mui/material";
 
-// Di sini kita akan menggunakan useDispatch dan useSelector
-// useSelector = adalah suatu hooks yang memperbolehkan kita memilih global state yang digunakan
-// useDispatch = adalah suatu hooks yang memperbolehkan kita memilih action apa yang ingin dilakukan
 import { useDispatch, useSelector } from "react-redux";
 
 const CounterReduxContainer = () => {
-  // useSelector ini menerima sebuah fungsi dengan satu parameter "state"
-  // anggap saja ini seperti "filter"
+  // Tambahkan state di sini
+  const [currAmount, setCurrAmount] = useState(0);
+
   const username = useSelector((state) => state.user);
   const counter = useSelector((state) => state.counter);
 
-  // Untuk menggunakan dispatch (action) nya, kita gunakan dispatcher dari hooks useDispatch
   const dispatcher = useDispatch();
 
   const buttonDecrementOnClickHandler = () => {
-    // Di sini kita akan memanggil dispatcher-nya,
-    // jangan lupa untuk melemparkan aksi apa yang ingin dilakukan via
-    // props "type"
     dispatcher({
       type: "decrement",
     });
@@ -34,6 +29,31 @@ const CounterReduxContainer = () => {
   const buttonIncrementOnClickHandler = () => {
     dispatcher({
       type: "increment",
+    });
+  };
+
+  // Fungsi yang dibutuhkan untuk part 2
+  const textFieldAmountOnChangeHandler = (e) => {
+    const amountFromField = isNaN(parseInt(e.target.value))
+      ? 0
+      : parseInt(e.target.value);
+
+    setCurrAmount(amountFromField);
+  };
+
+  const buttonDecrementByAmountOnClickHandler = () => {
+    // Kita panggil dispatcher lagi !
+    dispatcher({
+      type: "decrementSpec",
+      amount: currAmount,
+    });
+  };
+
+  const buttonIncrementByAmountOnClickHandler = () => {
+    // Kita panggil dispatcher lagi !
+    dispatcher({
+      type: "incrementSpec",
+      amount: currAmount,
     });
   };
 
@@ -87,6 +107,30 @@ const CounterReduxContainer = () => {
             onClick={buttonIncrementOnClickHandler}
           >
             +1
+          </Button>
+        </Box>
+
+        {/* Mari kita tambahkan Bagian baru di sini */}
+        <Box sx={{ display: "flex", gap: 2 }}>
+          <TextField
+            label="amount"
+            size="small"
+            value={currAmount}
+            onChange={textFieldAmountOnChangeHandler}
+          />
+          <Button
+            variant="outlined"
+            color="success"
+            onClick={buttonDecrementByAmountOnClickHandler}
+          >
+            - Amount
+          </Button>
+          <Button
+            variant="outlined"
+            color="success"
+            onClick={buttonIncrementByAmountOnClickHandler}
+          >
+            + Amount
           </Button>
         </Box>
       </Box>
