@@ -1,35 +1,54 @@
-// Pada akhirnya sekarang kita membutuhkan useState untuk menyimpan data dari TextField
 import React, { useState } from "react";
 
 import { Box, Button, TextField, Typography } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 
+// import selectors yang dibutuhkan di sini
+import { selectUser, selectCounter } from "../features/counter/sliceCounter.js";
+// import actions yang dibutuhkan di sini
+import {
+  increment,
+  decrement,
+  reset,
+  incrementSpec,
+  decrementSpec,
+} from "../features/counter/sliceCounter.js";
+
 const CounterReduxContainer = () => {
-  // Tambahkan state di sini
   const [currAmount, setCurrAmount] = useState(0);
 
-  const username = useSelector((state) => state.user);
-  const counter = useSelector((state) => state.counter);
+  const username = useSelector(selectUser);
+  const counter = useSelector(selectCounter);
 
   const dispatcher = useDispatch();
 
   const buttonDecrementOnClickHandler = () => {
-    dispatcher({
-      type: "decrement",
-    });
+    // Perhatikan di sini dispatcher tidak mempassing action seperti biasa lagi
+    // dispatcher({
+    //   type: "decrement",
+    // });
+
+    // Action di sini dipanggil seperti kita memanggil fungsi biasanya
+    dispatcher(decrement());
   };
 
   const buttonResetOnClickHandler = () => {
-    dispatcher({
-      type: "reset",
-    });
+    // dispatcher({
+    //   type: "reset",
+    // });
+
+    // Perhatikan di sini dispatcher tidak mempassing action seperti biasa lagi
+    dispatcher(reset());
   };
 
   const buttonIncrementOnClickHandler = () => {
-    dispatcher({
-      type: "increment",
-    });
+    // dispatcher({
+    //   type: "increment",
+    // });
+
+    // Perhatikan di sini dispatcher tidak mempassing action seperti biasa lagi
+    dispatcher(increment());
   };
 
   // Fungsi yang dibutuhkan untuk part 2
@@ -42,19 +61,29 @@ const CounterReduxContainer = () => {
   };
 
   const buttonDecrementByAmountOnClickHandler = () => {
-    // Kita panggil dispatcher lagi !
-    dispatcher({
-      type: "decrementSpec",
-      amount: currAmount,
-    });
+    // dispatcher({
+    //   type: "decrementSpec",
+    //   amount: currAmount,
+    // });
+
+    // Perhatikan di sini kita akan memanggil dispatcher
+    // untuk memanggil suatu action yang memiliki payload
+
+    // Karena tadi di dalam reducers incrementSpec
+    // Kita hanya -= action.payload
+    // maka di sini kita langsung passing payload angkanya saja
+    dispatcher(decrementSpec(currAmount));
   };
 
   const buttonIncrementByAmountOnClickHandler = () => {
     // Kita panggil dispatcher lagi !
-    dispatcher({
-      type: "incrementSpec",
-      amount: currAmount,
-    });
+    // dispatcher({
+    //   type: "incrementSpec",
+    //   amount: currAmount,
+    // });
+
+    // Sama dengan yang di atas
+    dispatcher(incrementSpec(currAmount));
   };
 
   return (
