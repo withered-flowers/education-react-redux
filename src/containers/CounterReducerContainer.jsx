@@ -6,12 +6,12 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 // import reducernya di sini
 import {
   counterInitialValue,
-  CounterReducer,
-} from "../reducers/CounterReducer.js";
+  counterReducer,
+} from "../reducers/counterReducer.js";
 
 const CounterReducerContainer = () => {
   const [counter, dispatchCounter] = useReducer(
-    CounterReducer,
+    counterReducer,
     counterInitialValue
   );
 

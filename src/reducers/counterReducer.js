@@ -1,7 +1,7 @@
 // ini hanyalah initial value, jadi tidak apa dibuat const
 export const counterInitialValue = 1;
 
-export const CounterReducer = (counter, action) => {
+export const counterReducer = (counter, action) => {
   // asumsi: action memiliki tipeAksi sebagai kondisi
   // tipeAksi memiliki string sebagai berikut:
   // "increment" untuk menambahkan counter (+1)
